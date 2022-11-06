@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
-
 
 // ----------------------------------------- 기본 -----------------------------------------------
 
@@ -46,7 +45,6 @@ void main() {
 //     );
 //   }
 // }
-
 
 // ----------------------------------------- Flexible & 당큰마켓 -----------------------------------------------
 
@@ -122,61 +120,87 @@ void main() {
 //   }
 // }
 
+class MyApp extends StatefulWidget {
+  MyApp({super.key});
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  var name = ['홍길동', '김철수', '신짱구'];
+  var like = [0, 0, 0];
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(),
-        body: ListView(
-          children: [
-            ListTile(
-              leading: Icon(Icons.photo, size: 50),
-              title: Text('홍길동', style: TextStyle(fontSize: 18)),
-            )
-          ],
-          // children: [
-          //   Container(
-          //     width: double.infinity, height: 70,
-          //     padding: EdgeInsets.all(10),
-          //     child: Row(
-          //       children: [
-          //         Icon(Icons.photo, size: 50),
-          //         Text('홍길동', style: TextStyle(fontSize: 18))
-          //       ],
-          //     ),
-          //   ),
-          //   Container(
-          //     width: double.infinity, height: 70,
-          //     padding: EdgeInsets.all(10),
-          //     child: Row(
-          //       children: [
-          //         Icon(Icons.photo, size: 50),
-          //         Text('홍길동', style: TextStyle(fontSize: 18))
-          //       ],
-          //     ),
-          //   ),
-          //   Container(
-          //     width: double.infinity, height: 70,
-          //     padding: EdgeInsets.all(10),
-          //     child: Row(
-          //       children: [
-          //         Icon(Icons.photo, size: 50),
-          //         Text('홍길동', style: TextStyle(fontSize: 18))
-          //       ],
-          //     ),
-          //   )
-          // ],
+        appBar: AppBar(
+          title: Text('연락처'),
         ),
-        // bottomNavigationBar: BottomAppBar(),
+        body: ListView.builder(
+          itemCount: 3,
+          itemBuilder: (context, i) {
+            return ListTile(
+              leading: Text(like[i].toString()),
+              title: Text(name[i]),
+              trailing: ElevatedButton(
+                child: Text('좋아요'),
+                onPressed: () {
+                  setState(() {
+                    print(like[i]);
+                    like[i]++;
+                  });
+                },
+              ),
+            );
+          },
+        ),
+        //  body: ListView(
+        //  children: [
+        //    ListTile(
+        //      leading: Icon(Icons.photo, size: 50),
+        //      title: Text('홍길동', style: TextStyle(fontSize: 18)),
+        //    )
+        //  ],
+        // children: [
+        //   Container(
+        //     width: double.infinity, height: 70,
+        //     padding: EdgeInsets.all(10),
+        //     child: Row(
+        //       children: [
+        //         Icon(Icons.photo, size: 50),
+        //         Text('홍길동', style: TextStyle(fontSize: 18))
+        //       ],
+        //     ),
+        //   ),
+        //   Container(
+        //     width: double.infinity, height: 70,
+        //     padding: EdgeInsets.all(10),
+        //     child: Row(
+        //       children: [
+        //         Icon(Icons.photo, size: 50),
+        //         Text('홍길동', style: TextStyle(fontSize: 18))
+        //       ],
+        //     ),
+        //   ),
+        //   Container(
+        //     width: double.infinity, height: 70,
+        //     padding: EdgeInsets.all(10),
+        //     child: Row(
+        //       children: [
+        //         Icon(Icons.photo, size: 50),
+        //         Text('홍길동', style: TextStyle(fontSize: 18))
+        //       ],
+        //     ),
+        //   )
+        // ],
+        //  ),
+        //bottomNavigationBar: BottomAppBar(),
       ),
     );
   }
 }
-
 
 class BottomAppBar extends StatelessWidget {
   const BottomAppBar({super.key});
@@ -190,9 +214,18 @@ class BottomAppBar extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              IconButton(icon: Icon(Icons.call), color: Colors.black, onPressed: () {}),
-              IconButton(icon: Icon(Icons.message), color: Colors.black, onPressed: () {}),
-              IconButton(icon: Icon(Icons.contact_page), color: Colors.black, onPressed: () {}),
+              IconButton(
+                  icon: Icon(Icons.call),
+                  color: Colors.black,
+                  onPressed: () {}),
+              IconButton(
+                  icon: Icon(Icons.message),
+                  color: Colors.black,
+                  onPressed: () {}),
+              IconButton(
+                  icon: Icon(Icons.contact_page),
+                  color: Colors.black,
+                  onPressed: () {}),
             ],
           ),
           decoration: BoxDecoration(color: Colors.white),
