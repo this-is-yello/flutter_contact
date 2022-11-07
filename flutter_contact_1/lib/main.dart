@@ -1,7 +1,101 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    MaterialApp(
+     home: MyApp())
+    );
+}
+
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  
+  var name = ['김철수', '이영희', '홍길동'];
+  var like = [0, 0, 0];
+  var total =3;
+
+  addOne() {
+    setState(() {
+      total++;
+    });
+  }
+
+  @override
+  build(context) {
+    return Scaffold(
+        floatingActionButton: FloatingActionButton(onPressed: () {
+          showDialog(context: context, builder: (context) {
+            return DialogUI(addOne : addOne());
+          });
+        }),
+        appBar: AppBar(
+          title: Center(child: Text(total.toString())),
+        ),
+        body: ListView.builder(
+          itemCount: 3,
+          itemBuilder: (context, i) {
+            return ListTile(
+              // leading: Text(like[i].toString()),
+              leading: Icon(Icons.photo),
+              title: Text(name[i]),
+              // trailing: ElevatedButton(child: Text('좋아요'), onPressed: () {
+              //   setState(() {
+              //     print(like[i]);
+              //     like[i]++;
+              //   });
+              // }),
+            );
+          }
+        ),
+      );
+  }
+}
+class DialogUI extends StatelessWidget {
+  DialogUI({super.key, this.addOne});
+  final addOne;
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+              child: Container(
+                width: 240,
+                height: 200,
+                padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Contact', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),),
+                    TextField(),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(addOne.toString()),
+                          TextButton(
+                            child: Text('Cancel'),
+                            onPressed: () {
+                              // Navigator.of(context).pop();
+                              Navigator.pop(context);
+                            }),
+                            TextButton(
+                            child: Text('Ok'),
+                            onPressed: () {
+                              addOne;
+                            }),
+                        ],
+                      ),
+                    ),
+                  ]),
+              ));
+  }
 }
 
 // ----------------------------------------- 기본 -----------------------------------------------
@@ -120,117 +214,117 @@ void main() {
 //   }
 // }
 
-class MyApp extends StatefulWidget {
-  MyApp({super.key});
+// class MyApp extends StatefulWidget {
+//   MyApp({super.key});
 
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
+//   @override
+//   State<MyApp> createState() => _MyAppState();
+// }
 
-class _MyAppState extends State<MyApp> {
-  var name = ['홍길동', '김철수', '신짱구'];
-  var like = [0, 0, 0];
+// class _MyAppState extends State<MyApp> {
+//   var name = ['홍길동', '김철수', '신짱구'];
+//   var like = [0, 0, 0];
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('연락처'),
-        ),
-        body: ListView.builder(
-          itemCount: 3,
-          itemBuilder: (context, i) {
-            return ListTile(
-              leading: Text(like[i].toString()),
-              title: Text(name[i]),
-              trailing: ElevatedButton(
-                child: Text('좋아요'),
-                onPressed: () {
-                  setState(() {
-                    print(like[i]);
-                    like[i]++;
-                  });
-                },
-              ),
-            );
-          },
-        ),
-        //  body: ListView(
-        //  children: [
-        //    ListTile(
-        //      leading: Icon(Icons.photo, size: 50),
-        //      title: Text('홍길동', style: TextStyle(fontSize: 18)),
-        //    )
-        //  ],
-        // children: [
-        //   Container(
-        //     width: double.infinity, height: 70,
-        //     padding: EdgeInsets.all(10),
-        //     child: Row(
-        //       children: [
-        //         Icon(Icons.photo, size: 50),
-        //         Text('홍길동', style: TextStyle(fontSize: 18))
-        //       ],
-        //     ),
-        //   ),
-        //   Container(
-        //     width: double.infinity, height: 70,
-        //     padding: EdgeInsets.all(10),
-        //     child: Row(
-        //       children: [
-        //         Icon(Icons.photo, size: 50),
-        //         Text('홍길동', style: TextStyle(fontSize: 18))
-        //       ],
-        //     ),
-        //   ),
-        //   Container(
-        //     width: double.infinity, height: 70,
-        //     padding: EdgeInsets.all(10),
-        //     child: Row(
-        //       children: [
-        //         Icon(Icons.photo, size: 50),
-        //         Text('홍길동', style: TextStyle(fontSize: 18))
-        //       ],
-        //     ),
-        //   )
-        // ],
-        //  ),
-        //bottomNavigationBar: BottomAppBar(),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: Scaffold(
+//         appBar: AppBar(
+//           title: Text('연락처'),
+//         ),
+//         body: ListView.builder(
+//           itemCount: 3,
+//           itemBuilder: (context, i) {
+//             return ListTile(
+//               leading: Text(like[i].toString()),
+//               title: Text(name[i]),
+//               trailing: ElevatedButton(
+//                 child: Text('좋아요'),
+//                 onPressed: () {
+//                   setState(() {
+//                     print(like[i]);
+//                     like[i]++;
+//                   });
+//                 },
+//               ),
+//             );
+//           },
+//         ),
+//         //  body: ListView(
+//         //  children: [
+//         //    ListTile(
+//         //      leading: Icon(Icons.photo, size: 50),
+//         //      title: Text('홍길동', style: TextStyle(fontSize: 18)),
+//         //    )
+//         //  ],
+//         // children: [
+//         //   Container(
+//         //     width: double.infinity, height: 70,
+//         //     padding: EdgeInsets.all(10),
+//         //     child: Row(
+//         //       children: [
+//         //         Icon(Icons.photo, size: 50),
+//         //         Text('홍길동', style: TextStyle(fontSize: 18))
+//         //       ],
+//         //     ),
+//         //   ),
+//         //   Container(
+//         //     width: double.infinity, height: 70,
+//         //     padding: EdgeInsets.all(10),
+//         //     child: Row(
+//         //       children: [
+//         //         Icon(Icons.photo, size: 50),
+//         //         Text('홍길동', style: TextStyle(fontSize: 18))
+//         //       ],
+//         //     ),
+//         //   ),
+//         //   Container(
+//         //     width: double.infinity, height: 70,
+//         //     padding: EdgeInsets.all(10),
+//         //     child: Row(
+//         //       children: [
+//         //         Icon(Icons.photo, size: 50),
+//         //         Text('홍길동', style: TextStyle(fontSize: 18))
+//         //       ],
+//         //     ),
+//         //   )
+//         // ],
+//         //  ),
+//         //bottomNavigationBar: BottomAppBar(),
+//       ),
+//     );
+//   }
+// }
 
-class BottomAppBar extends StatelessWidget {
-  const BottomAppBar({super.key});
+// class BottomAppBar extends StatelessWidget {
+//   const BottomAppBar({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Container(
-          height: 60,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              IconButton(
-                  icon: Icon(Icons.call),
-                  color: Colors.black,
-                  onPressed: () {}),
-              IconButton(
-                  icon: Icon(Icons.message),
-                  color: Colors.black,
-                  onPressed: () {}),
-              IconButton(
-                  icon: Icon(Icons.contact_page),
-                  color: Colors.black,
-                  onPressed: () {}),
-            ],
-          ),
-          decoration: BoxDecoration(color: Colors.white),
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: Scaffold(
+//         body: Container(
+//           height: 60,
+//           child: Row(
+//             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//             children: [
+//               IconButton(
+//                   icon: Icon(Icons.call),
+//                   color: Colors.black,
+//                   onPressed: () {}),
+//               IconButton(
+//                   icon: Icon(Icons.message),
+//                   color: Colors.black,
+//                   onPressed: () {}),
+//               IconButton(
+//                   icon: Icon(Icons.contact_page),
+//                   color: Colors.black,
+//                   onPressed: () {}),
+//             ],
+//           ),
+//           decoration: BoxDecoration(color: Colors.white),
+//         ),
+//       ),
+//     );
+//   }
+// }
