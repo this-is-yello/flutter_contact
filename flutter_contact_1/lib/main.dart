@@ -15,88 +15,97 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  
-  var name = ['김철수', '이영희', '홍길동'];
-  var like = [0, 0, 0];
-  var total =3;
 
-  addOne() {
+  var name = ['김철수', '이영희', '홍길동'];
+  var total = 3;
+
+  plusOne() {
     setState(() {
       total++;
     });
   }
+  addName(a) {
+    setState(() {
+      name.add(a);
+    });
+  }
 
   @override
-  build(context) {
+  Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton(onPressed: () {
+      floatingActionButton: FloatingActionButton(
+        child: Text('+', style: TextStyle(fontSize: 36),),
+        onPressed: () {
           showDialog(context: context, builder: (context) {
-            return DialogUI(addOne : addOne());
+            return DialogUI(plusOne : plusOne, addName : addName);
           });
-        }),
-        appBar: AppBar(
-          title: Center(child: Text(total.toString())),
-        ),
-        body: ListView.builder(
-          itemCount: 3,
-          itemBuilder: (context, i) {
-            return ListTile(
-              // leading: Text(like[i].toString()),
-              leading: Icon(Icons.photo),
-              title: Text(name[i]),
-              // trailing: ElevatedButton(child: Text('좋아요'), onPressed: () {
-              //   setState(() {
-              //     print(like[i]);
-              //     like[i]++;
-              //   });
-              // }),
-            );
-          }
-        ),
-      );
+          // setState(() {
+          //   total++;
+          // });
+        },
+      ),
+      appBar: AppBar(title: Text(total.toString()),),
+      body: ListView.builder(
+        itemCount: name.length,
+        itemBuilder: (context, i){
+          return ListTile(
+            leading: Icon(Icons.photo),
+            title: Text(name[i]),
+          );
+        }
+      ),
+    );
   }
 }
+
 class DialogUI extends StatelessWidget {
-  DialogUI({super.key, this.addOne});
-  final addOne;
+  DialogUI({super.key, this.plusOne, this.addName});
+  final plusOne;
+  final addName;
+  var inputData = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
-              child: Container(
-                width: 240,
-                height: 200,
-                padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Contact', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),),
-                    TextField(),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(addOne.toString()),
-                          TextButton(
-                            child: Text('Cancel'),
-                            onPressed: () {
-                              // Navigator.of(context).pop();
-                              Navigator.pop(context);
-                            }),
-                            TextButton(
-                            child: Text('Ok'),
-                            onPressed: () {
-                              addOne;
-                            }),
-                        ],
-                      ),
-                    ),
-                  ]),
-              ));
+      child: Container(
+        width: 200,
+        height: 160,
+        padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('Contact'),
+            TextField(controller: inputData),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    if (inputData.text.length == 0) {
+                      return;
+                    } else {  
+                      plusOne();
+                      Navigator.of(context).pop();
+                      addName(inputData.text);
+                    }
+                  },
+                ),
+                TextButton(
+                  child: Text('CANCEL'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
+
 
 // ----------------------------------------- 기본 -----------------------------------------------
 
