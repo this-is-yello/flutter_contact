@@ -17,6 +17,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
 
   var name = ['김철수', '이영희', '홍길동'];
+  var number = ['010-1234-5678', '010-2345-6789', '010-3456-7890'];
   var total = 3;
 
   plusOne() {
@@ -24,11 +25,22 @@ class _MyAppState extends State<MyApp> {
       total++;
     });
   }
+  minusOne() {
+    setState(() {
+      total--;
+    });
+  }
   addName(a) {
     setState(() {
       name.add(a);
     });
   }
+  addNumber(a) {
+    setState(() {
+      number.add(a);
+    });
+  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -37,20 +49,29 @@ class _MyAppState extends State<MyApp> {
         child: Text('+', style: TextStyle(fontSize: 36),),
         onPressed: () {
           showDialog(context: context, builder: (context) {
-            return DialogUI(plusOne : plusOne, addName : addName);
+            return DialogUI(plusOne : plusOne, addName : addName, addNumber : addNumber);
           });
           // setState(() {
           //   total++;
           // });
         },
       ),
-      appBar: AppBar(title: Text(total.toString()),),
+      appBar: AppBar(title: Text("연락처 " + total.toString()),),
       body: ListView.builder(
         itemCount: name.length,
         itemBuilder: (context, i){
           return ListTile(
             leading: Icon(Icons.photo),
-            title: Text(name[i]),
+            title: Text(name[i] + number[i]),
+            trailing: ElevatedButton(
+              child: Text('삭제'),
+              onPressed: () {
+                print(name[i]);
+                minusOne();
+                name.remove(name[i]);
+                number.remove(number[i]);
+              },
+            ),
           );
         }
       ),
@@ -59,35 +80,40 @@ class _MyAppState extends State<MyApp> {
 }
 
 class DialogUI extends StatelessWidget {
-  DialogUI({super.key, this.plusOne, this.addName});
+  DialogUI({super.key, this.plusOne, this.addName, this.addNumber});
   final plusOne;
   final addName;
-  var inputData = TextEditingController();
+  final addNumber;
+  var inputName = TextEditingController();
+  var inputNumber = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
       child: Container(
         width: 200,
-        height: 160,
+        height: 200,
         padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text('Contact'),
-            TextField(controller: inputData),
+            TextField(controller: inputName),
+            TextField(controller: inputNumber),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(
                   child: Text('OK'),
                   onPressed: () {
-                    if (inputData.text.length == 0) {
+                    if (inputName.text.length == 0 || inputNumber.text.length ==0) {
+                      Navigator.of(context).pop();
                       return;
                     } else {  
                       plusOne();
                       Navigator.of(context).pop();
-                      addName(inputData.text);
+                      addName(inputName.text);
+                      addNumber(inputNumber.text);
                     }
                   },
                 ),
