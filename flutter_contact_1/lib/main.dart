@@ -46,7 +46,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        child: Text('+', style: TextStyle(fontSize: 36),),
+        child: Center(child: Text('+', style: TextStyle(fontSize: 36))),
         onPressed: () {
           showDialog(context: context, builder: (context) {
             return DialogUI(plusOne : plusOne, addName : addName, addNumber : addNumber);
@@ -57,24 +57,65 @@ class _MyAppState extends State<MyApp> {
         },
       ),
       appBar: AppBar(title: Text("연락처 " + total.toString()),),
-      body: ListView.builder(
-        itemCount: name.length,
-        itemBuilder: (context, i){
-          return ListTile(
-            leading: Icon(Icons.photo),
-            title: Text(name[i] + number[i]),
-            trailing: ElevatedButton(
-              child: Text('삭제'),
-              onPressed: () {
-                print(name[i]);
-                minusOne();
-                name.remove(name[i]);
-                number.remove(number[i]);
-              },
+      body: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.fromLTRB(12, 0, 0, 0),
+            height: 30,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Center(child: Icon(Icons.arrow_drop_down_outlined, size: 30,)),
+                Center(child: Text('정렬', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800),)),
+              ],
             ),
-          );
-        }
+          ),
+          Expanded(
+            child: Container(
+              child: ListView.builder(
+                itemCount: name.length,
+                itemBuilder: (context, i){
+                  return ListTile(
+                    leading: Icon(Icons.photo),
+                    title: Text(name[i] + " " + number[i]),
+                    trailing: ElevatedButton(
+                      child: Text('삭제'),
+                      onPressed: () {
+                        print(name[i]);
+                        minusOne();
+                        name.remove(name[i]);
+                        number.remove(number[i]);
+                      },
+                    ),
+                  );
+                }
+              ),
+            ),
+          ),
+        ],
       ),
+      bottomNavigationBar: BottomAppBar(
+          child: SizedBox(
+            height: 60,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.call),
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: Icon(Icons.message),
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: Icon(Icons.contact_page),
+                  onPressed: () {},
+                ),
+              ]
+            ),
+          ),
+        ),
     );
   }
 }
