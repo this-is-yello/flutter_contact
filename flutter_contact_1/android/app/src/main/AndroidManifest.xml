@@ -1,5 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.flutter_contact_1">
+
+    <uses-permission andriod:name="andriod.permission.READ_CONTACTS" />
+    <uses-permission andriod:name="andriod.permission.WRITE_CONTACTS" />
+    
    <application
         android:label="flutter_contact_1"
         android:name="${applicationName}"

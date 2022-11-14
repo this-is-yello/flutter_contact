@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() {
-  runApp(
-    MaterialApp(
-     home: MyApp())
-    );
+  runApp(MaterialApp(home: MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -15,6 +13,21 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  getPermission() async {
+    var status = await Permission.contacts.status;
+    if (status.isGranted) {
+      print('허락됨');
+    } else if (status.isDenied) {
+      print('거절됨');
+      Permission.contacts.request();
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getPermission();
+  }
 
   var name = ['홍길동', '이영희', '김철수'];
   var number = ['010-2345-6789', '010-1234-5618', '010-3456-7890'];
@@ -31,49 +44,54 @@ class _MyAppState extends State<MyApp> {
       total++;
     });
   }
+
   minusOne() {
     setState(() {
       total--;
     });
   }
+
   addName(a) {
     setState(() {
       name.add(a);
     });
   }
+
   addNumber(a) {
     setState(() {
       number.add(a);
     });
   }
+
   upName() {
     setState(() {
       name.sort();
     });
   }
+
   downNumber() {
     setState(() {
       number.sort();
     });
   }
+
   var clicki = 0;
   nameing() {
     setState(() {
-      clicki=clicki;
-      if(clicki%2==0) {
-        print(clicki%2);
+      clicki = clicki;
+      if (clicki % 2 == 0) {
+        print(clicki % 2);
         print(clicki);
         upName();
         clicki++;
       } else {
-        print(clicki%2);
+        print(clicki % 2);
         print(clicki);
         downNumber();
         clicki++;
       }
     });
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -81,9 +99,12 @@ class _MyAppState extends State<MyApp> {
       floatingActionButton: FloatingActionButton(
         child: Center(child: Text('+', style: TextStyle(fontSize: 36))),
         onPressed: () {
-          showDialog(context: context, builder: (context) {
-            return DialogUI(plusOne : plusOne, addName : addName, addNumber : addNumber);
-          });
+          showDialog(
+              context: context,
+              builder: (context) {
+                return DialogUI(
+                    plusOne: plusOne, addName: addName, addNumber: addNumber);
+              });
           // setState(() {
           //   total++;
           // });
@@ -98,59 +119,63 @@ class _MyAppState extends State<MyApp> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Center(child: IconButton(icon: Icon(Icons.arrow_drop_down_outlined),onPressed: () {
-                  nameing();
-                })),
-                Center(child: Text('정렬', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800),)),
+                Center(
+                    child: IconButton(
+                        icon: Icon(Icons.arrow_drop_down_outlined),
+                        onPressed: () {
+                          nameing();
+                        })),
+                Center(
+                    child: Text(
+                  '정렬',
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800),
+                )),
               ],
             ),
           ),
           Expanded(
             child: Container(
               child: ListView.builder(
-                itemCount: name.length,
-                itemBuilder: (context, i){
-                  return ListTile(
-                    leading: Icon(Icons.photo),
-                    title: Text(name[i] + " " + number[i]),
-                    trailing: ElevatedButton(
-                      child: Text('삭제'),
-                      onPressed: () {
-                        print(name[i]);
-                        minusOne();
-                        name.remove(name[i]);
-                        number.remove(number[i]);
-                      },
-                    ),
-                  );
-                }
-              ),
+                  itemCount: name.length,
+                  itemBuilder: (context, i) {
+                    return ListTile(
+                      leading: Icon(Icons.photo),
+                      title: Text(name[i] + " " + number[i]),
+                      trailing: ElevatedButton(
+                        child: Text('삭제'),
+                        onPressed: () {
+                          print(name[i]);
+                          minusOne();
+                          name.remove(name[i]);
+                          number.remove(number[i]);
+                        },
+                      ),
+                    );
+                  }),
             ),
           ),
         ],
       ),
       bottomNavigationBar: BottomAppBar(
-          child: SizedBox(
-            height: 60,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.call),
-                  onPressed: () {},
-                ),
-                IconButton(
-                  icon: Icon(Icons.message),
-                  onPressed: () {},
-                ),
-                IconButton(
-                  icon: Icon(Icons.contact_page),
-                  onPressed: () {},
-                ),
-              ]
+        child: SizedBox(
+          height: 60,
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            IconButton(
+              icon: Icon(Icons.call),
+              onPressed: () {},
             ),
-          ),
+            IconButton(
+              icon: Icon(Icons.message),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: Icon(Icons.contact_page),
+              onPressed: () {},
+            ),
+          ]),
         ),
+      ),
     );
   }
 }
@@ -182,10 +207,11 @@ class DialogUI extends StatelessWidget {
                 TextButton(
                   child: Text('OK'),
                   onPressed: () {
-                    if (inputName.text.length == 0 || inputNumber.text.length ==0) {
+                    if (inputName.text.length == 0 ||
+                        inputNumber.text.length == 0) {
                       Navigator.of(context).pop();
                       return;
-                    } else {  
+                    } else {
                       plusOne();
                       Navigator.of(context).pop();
                       addName(inputName.text);
