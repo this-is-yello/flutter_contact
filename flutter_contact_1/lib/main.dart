@@ -16,9 +16,15 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-  var name = ['김철수', '이영희', '홍길동'];
-  var number = ['010-1234-5678', '010-2345-6789', '010-3456-7890'];
+  var name = ['홍길동', '이영희', '김철수'];
+  var number = ['010-2345-6789', '010-1234-5618', '010-3456-7890'];
   var total = 3;
+
+  // bool isName = false;
+
+  // void naming(List list) {
+  //   list.sort((a, b) => isName ? a.compareTo(b) : b.compareTo(a));
+  // }
 
   plusOne() {
     setState(() {
@@ -40,6 +46,33 @@ class _MyAppState extends State<MyApp> {
       number.add(a);
     });
   }
+  upName() {
+    setState(() {
+      name.sort();
+    });
+  }
+  downNumber() {
+    setState(() {
+      number.sort();
+    });
+  }
+  var clicki = 0;
+  nameing() {
+    setState(() {
+      clicki=clicki;
+      if(clicki%2==0) {
+        print(clicki%2);
+        print(clicki);
+        upName();
+        clicki++;
+      } else {
+        print(clicki%2);
+        print(clicki);
+        downNumber();
+        clicki++;
+      }
+    });
+  }
   
 
   @override
@@ -56,7 +89,7 @@ class _MyAppState extends State<MyApp> {
           // });
         },
       ),
-      appBar: AppBar(title: Text("연락처 " + total.toString()),),
+      appBar: AppBar(title: Text("연락처" + "  " + total.toString())),
       body: Column(
         children: [
           Container(
@@ -65,7 +98,9 @@ class _MyAppState extends State<MyApp> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Center(child: Icon(Icons.arrow_drop_down_outlined, size: 30,)),
+                Center(child: IconButton(icon: Icon(Icons.arrow_drop_down_outlined),onPressed: () {
+                  nameing();
+                })),
                 Center(child: Text('정렬', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800),)),
               ],
             ),
