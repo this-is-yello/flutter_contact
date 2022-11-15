@@ -35,16 +35,16 @@ class _MyAppState extends State<MyApp> {
 
   var nameNumber = [
     {
-    'name': '홍길동',
-    'number': '010-2345-6789'
+      'name': '홍길동',
+      'number': '010-2345-6789'
     },
     {
-    'name': '이영희',
-    'number': '010-1234-5618'
+      'name': '이영희',
+      'number': '010-1234-5618'
     },
     {
-    'name': '김철수',
-    'number': '010-3456-7890'
+      'name': '김철수',
+      'number': '010-3456-7890'
     },
   ];
   
