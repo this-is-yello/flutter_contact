@@ -34,21 +34,10 @@ class _MyAppState extends State<MyApp> {
   var total = 3;
 
   var nameNumber = [
-    {
-      'name': '홍길동',
-      'number': '010-2345-6789'
-    },
-    {
-      'name': '이영희',
-      'number': '010-1234-5618'
-    },
-    {
-      'name': '김철수',
-      'number': '010-3456-7890'
-    },
+    {'name': '홍길동', 'number': '010-2345-6789'},
+    {'name': '이영희', 'number': '010-1234-5618'},
+    {'name': '김철수', 'number': '010-3456-7890'},
   ];
-  
-
 
   // bool isName = false;
 
@@ -157,7 +146,8 @@ class _MyAppState extends State<MyApp> {
                   itemBuilder: (context, i) {
                     return ListTile(
                       leading: Icon(Icons.photo),
-                      title: Text("${nameNumber[i]['name']}  ${nameNumber[i]['number']}"),
+                      title: Text(
+                          "${nameNumber[i]['name']}  ${nameNumber[i]['number']}"),
                       trailing: ElevatedButton(
                         child: Text('삭제'),
                         onPressed: () {
