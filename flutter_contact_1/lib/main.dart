@@ -33,6 +33,23 @@ class _MyAppState extends State<MyApp> {
   var number = ['010-2345-6789', '010-1234-5618', '010-3456-7890'];
   var total = 3;
 
+  var nameNumber = [
+    {
+    'name': 'ghdrlfehd',
+    'number': '010-1010-1010'
+    },
+    {
+    'name': 'ddd',
+    'number': '010-5555-1010'
+    },
+    {
+    'name': 'gfvfv',
+    'number': '010-3333-1010'
+    },
+  ];
+  
+
+
   // bool isName = false;
 
   // void naming(List list) {
@@ -140,7 +157,7 @@ class _MyAppState extends State<MyApp> {
                   itemBuilder: (context, i) {
                     return ListTile(
                       leading: Icon(Icons.photo),
-                      title: Text(name[i] + " " + number[i]),
+                      title: Text("${nameNumber[i]['name']}  ${nameNumber[i]['number']}"),
                       trailing: ElevatedButton(
                         child: Text('삭제'),
                         onPressed: () {
