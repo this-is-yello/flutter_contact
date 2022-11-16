@@ -33,17 +33,37 @@ class _MyAppState extends State<MyApp> {
   var number = ['010-2345-6789', '010-1234-5618', '010-3456-7890'];
   var total = 3;
 
+  //final profiles = nameNumber;
+
   var nameNumber = [
-    {'name': '홍길동', 'number': '010-2345-6789'},
-    {'name': '이영희', 'number': '010-1234-5618'},
-    {'name': '김철수', 'number': '010-3456-7890'},
+    {
+      'name': '홍길동',
+      'number': '010-2345-6789'
+    },
+    {
+      'name': '이영희',
+      'number': '010-1234-5618'
+    },
+    {
+      'name': '김철수',
+      'number': '010-3456-7890'
+    },
   ];
+  
+
 
   // bool isName = false;
 
-  // void naming(List list) {
-  //   list.sort((a, b) => isName ? a.compareTo(b) : b.compareTo(a));
-  // }
+  void naming() {
+    print('eeee');
+    nameNumber[0]['name'];
+    try {
+         nameNumber.sort((a, b) =>  a['name'].toString().compareTo(b['name'].toString()));
+    } catch (e) {
+      print(e);
+    }
+ 
+  }
 
   plusOne() {
     setState(() {
@@ -71,7 +91,7 @@ class _MyAppState extends State<MyApp> {
 
   upName() {
     setState(() {
-      name.sort();
+      naming();
     });
   }
 
@@ -81,23 +101,23 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  var clicki = 0;
-  nameing() {
-    setState(() {
-      clicki = clicki;
-      if (clicki % 2 == 0) {
-        print(clicki % 2);
-        print(clicki);
-        upName();
-        clicki++;
-      } else {
-        print(clicki % 2);
-        print(clicki);
-        downNumber();
-        clicki++;
-      }
-    });
-  }
+  // var clicki = 0;
+  // nameing() {
+  //   setState(() {
+  //     clicki = clicki;
+  //     if (clicki % 2 == 0) {
+  //       print(clicki % 2);
+  //       print(clicki);
+  //       upName();
+  //       clicki++;
+  //     } else {
+  //       print(clicki % 2);
+  //       print(clicki);
+  //       downNumber();
+  //       clicki++;
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +149,7 @@ class _MyAppState extends State<MyApp> {
                     child: IconButton(
                         icon: Icon(Icons.arrow_drop_down_outlined),
                         onPressed: () {
-                          nameing();
+                          naming();
                         })),
                 Center(
                     child: Text(
@@ -146,8 +166,7 @@ class _MyAppState extends State<MyApp> {
                   itemBuilder: (context, i) {
                     return ListTile(
                       leading: Icon(Icons.photo),
-                      title: Text(
-                          "${nameNumber[i]['name']}  ${nameNumber[i]['number']}"),
+                      title: Text("${nameNumber[i]['name']}  ${nameNumber[i]['number']}"),
                       trailing: ElevatedButton(
                         child: Text('삭제'),
                         onPressed: () {

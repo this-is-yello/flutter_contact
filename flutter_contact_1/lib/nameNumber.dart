@@ -1,6 +1,6 @@
 import 'package:flutter_contact_1/sub.dart';
 
-class profileList {
+class ProfileList {
   final List<Profilee> _dummyProfile = [
     Profilee(name: '홍길동', number: '010-2345-6789'),
     Profilee(name: '이영희', number: '010-1234-5618'),
