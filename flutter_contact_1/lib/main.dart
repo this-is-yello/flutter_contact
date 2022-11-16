@@ -29,28 +29,16 @@ class _MyAppState extends State<MyApp> {
     getPermission();
   }
 
-  var name = ['홍길동', '이영희', '김철수'];
-  var number = ['010-2345-6789', '010-1234-5618', '010-3456-7890'];
-  var total = 3;
+  // var name = ['홍길동', '이영희', '김철수'];
+  // var number = ['010-2345-6789', '010-1234-5618', '010-3456-7890'];
 
-  //final profiles = nameNumber;
-
-  var nameNumber = [
-    {
-      'name': '홍길동',
-      'number': '010-2345-6789'
-    },
-    {
-      'name': '이영희',
-      'number': '010-1234-5618'
-    },
-    {
-      'name': '김철수',
-      'number': '010-3456-7890'
-    },
+  final nameNumber = [
+    {'name': '홍길동', 'number': '010-2345-6789'},
+    {'name': '이영희', 'number': '010-1234-5618'},
+    {'name': '김철수', 'number': '010-3456-7890'},
   ];
-  
 
+  int total = 3;
 
   // bool isName = false;
 
@@ -58,11 +46,11 @@ class _MyAppState extends State<MyApp> {
     print('eeee');
     nameNumber[0]['name'];
     try {
-         nameNumber.sort((a, b) =>  a['name'].toString().compareTo(b['name'].toString()));
+      nameNumber
+          .sort((a, b) => a['name'].toString().compareTo(b['name'].toString()));
     } catch (e) {
       print(e);
     }
- 
   }
 
   plusOne() {
@@ -77,15 +65,15 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  addName(a) {
+  addName(numberName) {
     setState(() {
-      name.add(a);
+      nameNumber.add(numberName);
     });
   }
 
-  addNumber(a) {
+  addNumber(numberName) {
     setState(() {
-      number.add(a);
+      nameNumber.add(numberName);
     });
   }
 
@@ -95,11 +83,11 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  downNumber() {
-    setState(() {
-      number.sort();
-    });
-  }
+  // downNumber() {
+  //   setState(() {
+  //     number.sort();
+  //   });
+  // }
 
   // var clicki = 0;
   // nameing() {
@@ -129,14 +117,23 @@ class _MyAppState extends State<MyApp> {
               context: context,
               builder: (context) {
                 return DialogUI(
-                    plusOne: plusOne, addName: addName, addNumber: addNumber);
+                  plusOne: plusOne,
+                  addName: addName,
+                  addNumber: addNumber,
+                );
               });
           // setState(() {
           //   total++;
           // });
         },
       ),
-      appBar: AppBar(title: Text("연락처" + "  " + total.toString())),
+      appBar: AppBar(
+        title: Text(
+          "연락처" + "  " + total.toString(),
+          style: TextStyle(color: Colors.blue),
+        ),
+        backgroundColor: Colors.white,
+      ),
       body: Column(
         children: [
           Container(
@@ -162,18 +159,18 @@ class _MyAppState extends State<MyApp> {
           Expanded(
             child: Container(
               child: ListView.builder(
-                  itemCount: name.length,
+                  itemCount: nameNumber.length,
                   itemBuilder: (context, i) {
                     return ListTile(
                       leading: Icon(Icons.photo),
-                      title: Text("${nameNumber[i]['name']}  ${nameNumber[i]['number']}"),
+                      title: Text(
+                          "${nameNumber[i]['name']}  ${nameNumber[i]['number']}"),
                       trailing: ElevatedButton(
                         child: Text('삭제'),
                         onPressed: () {
-                          print(name[i]);
+                          print(nameNumber[i]);
                           minusOne();
-                          name.remove(name[i]);
-                          number.remove(number[i]);
+                          nameNumber.remove(nameNumber[i]);
                         },
                       ),
                     );
@@ -236,12 +233,14 @@ class DialogUI extends StatelessWidget {
                     if (inputName.text.length == 0 ||
                         inputNumber.text.length == 0) {
                       Navigator.of(context).pop();
+                      print('if');
                       return;
                     } else {
                       plusOne();
                       Navigator.of(context).pop();
                       addName(inputName.text);
                       addNumber(inputNumber.text);
+                      print('else');
                     }
                   },
                 ),
