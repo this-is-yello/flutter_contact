@@ -32,6 +32,7 @@ class _MyAppState extends State<MyApp> {
   // var name = ['홍길동', '이영희', '김철수'];
   // var number = ['010-2345-6789', '010-1234-5618', '010-3456-7890'];
 
+
   final nameNumber = [
     {'name': '홍길동', 'number': '010-2345-6789'},
     {'name': '이영희', 'number': '010-1234-5618'},
@@ -40,16 +41,16 @@ class _MyAppState extends State<MyApp> {
 
   int total = 3;
 
-  // bool isName = false;
-
   void naming() {
-    print('eeee');
+    print(nameNumber[0]['name'].toString() + '_' + nameNumber[0]['number'].toString()) ;
     nameNumber[0]['name'];
     try {
-      nameNumber
-          .sort((a, b) => a['name'].toString().compareTo(b['name'].toString()));
+      setState(() {
+          nameNumber.sort((a, b) =>  a['name'].toString().compareTo(b['name'].toString()));
+      });
+      print(nameNumber.toString());
     } catch (e) {
-      print(e);
+      print('error');
     }
   }
 
@@ -65,15 +66,21 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  addName(numberName) {
+  addName(a,b) {
+    var temp ;
     setState(() {
-      nameNumber.add(numberName);
+      temp =  {'name':a.toString(),'number':b.toString()};
     });
+    print(temp.toString());
+    setState(() {
+      nameNumber.add(temp);
+    });
+    print(nameNumber.toString());
   }
 
-  addNumber(numberName) {
+  addNumber(nameNumber) {
     setState(() {
-      nameNumber.add(numberName);
+      nameNumber.add(nameNumber['number']);
     });
   }
 
@@ -89,23 +96,6 @@ class _MyAppState extends State<MyApp> {
   //   });
   // }
 
-  // var clicki = 0;
-  // nameing() {
-  //   setState(() {
-  //     clicki = clicki;
-  //     if (clicki % 2 == 0) {
-  //       print(clicki % 2);
-  //       print(clicki);
-  //       upName();
-  //       clicki++;
-  //     } else {
-  //       print(clicki % 2);
-  //       print(clicki);
-  //       downNumber();
-  //       clicki++;
-  //     }
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -122,9 +112,6 @@ class _MyAppState extends State<MyApp> {
                   addNumber: addNumber,
                 );
               });
-          // setState(() {
-          //   total++;
-          // });
         },
       ),
       appBar: AppBar(
@@ -230,16 +217,14 @@ class DialogUI extends StatelessWidget {
                 TextButton(
                   child: Text('OK'),
                   onPressed: () {
-                    if (inputName.text.length == 0 ||
-                        inputNumber.text.length == 0) {
+                    if (inputName.text.length == 0 || inputNumber.text.length == 0) {
                       Navigator.of(context).pop();
                       print('if');
                       return;
                     } else {
                       plusOne();
                       Navigator.of(context).pop();
-                      addName(inputName.text);
-                      addNumber(inputNumber.text);
+                      addName(inputName.text.toString(), inputNumber.text.toString());
                       print('else');
                     }
                   },
