@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:contacts_service/contacts_service.dart';
 
 void main() {
   runApp(MaterialApp(home: MyApp()));
@@ -17,29 +18,32 @@ class _MyAppState extends State<MyApp> {
     var status = await Permission.contacts.status;
     if (status.isGranted) {
       print('허락됨');
+      var contacts = await ContactsService.getContacts();
+      // print(contacts[0].givenName);
     } else if (status.isDenied) {
       print('거절됨');
       Permission.contacts.request();
+      // openAppSettings();
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    getPermission();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   getPermission();
+  // }
 
   // var name = ['홍길동', '이영희', '김철수'];
   // var number = ['010-2345-6789', '010-1234-5618', '010-3456-7890'];
 
 
-  final nameNumber = [
+  var nameNumber = [
     {'name': '홍길동', 'number': '010-2345-6789'},
     {'name': '이영희', 'number': '010-1234-5618'},
     {'name': '김철수', 'number': '010-3456-7890'},
   ];
 
-  int total = 3;
+  var total = 3;
 
   void naming() {
     print(nameNumber[0]['name'].toString() + '_' + nameNumber[0]['number'].toString()) ;
@@ -90,11 +94,11 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  // downNumber() {
-  //   setState(() {
-  //     number.sort();
-  //   });
-  // }
+  updateColor() {
+    Container(
+      decoration: BoxDecoration(color: Colors.grey),
+    );
+  }
 
 
   @override
@@ -120,6 +124,15 @@ class _MyAppState extends State<MyApp> {
           style: TextStyle(color: Colors.blue),
         ),
         backgroundColor: Colors.white,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.contacts),
+            color: Colors.blue,
+            onPressed: () {
+              print('getPermission');
+              getPermission();
+            }),
+        ],
       ),
       body: Column(
         children: [
@@ -136,9 +149,7 @@ class _MyAppState extends State<MyApp> {
                           naming();
                         })),
                 Center(
-                    child: Text(
-                  '정렬',
-                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800),
+                    child: Text('정렬', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800),
                 )),
               ],
             ),
@@ -160,6 +171,11 @@ class _MyAppState extends State<MyApp> {
                           nameNumber.remove(nameNumber[i]);
                         },
                       ),
+                      onTap: () {
+                        setState(() {
+                          updateColor();
+                        });
+                      },
                     );
                   }),
             ),
@@ -169,21 +185,22 @@ class _MyAppState extends State<MyApp> {
       bottomNavigationBar: BottomAppBar(
         child: SizedBox(
           height: 60,
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            IconButton(
-              icon: Icon(Icons.call),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(Icons.message),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(Icons.contact_page),
-              onPressed: () {},
-            ),
-          ]),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              IconButton(
+                icon: Icon(Icons.call),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: Icon(Icons.message),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: Icon(Icons.contact_page),
+                onPressed: () {},
+              ),
+            ]),
         ),
       ),
     );
@@ -209,8 +226,20 @@ class DialogUI extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text('Contact'),
-            TextField(controller: inputName),
-            TextField(controller: inputNumber),
+            TextField(
+              controller: inputName,
+              decoration: InputDecoration(
+                hintText: '이름',
+                // labelText: 'Name',
+              ),
+            ),
+            TextField(
+              controller: inputNumber,
+              decoration: InputDecoration(
+                hintText: '전화번호',
+                // labelText: 'Number',
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
