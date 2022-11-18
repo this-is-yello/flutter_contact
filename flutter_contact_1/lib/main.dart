@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:contacts_service/contacts_service.dart';
+// import 'package:contacts_service/contacts_service.dart';
 
 void main() {
   runApp(MaterialApp(home: MyApp()));
@@ -18,7 +18,7 @@ class _MyAppState extends State<MyApp> {
     var status = await Permission.contacts.status;
     if (status.isGranted) {
       print('허락됨');
-      var contacts = await ContactsService.getContacts();
+      // var contacts = await ContactsService.getContacts();
       // print(contacts[0].givenName);
     } else if (status.isDenied) {
       print('거절됨');
@@ -36,7 +36,6 @@ class _MyAppState extends State<MyApp> {
   // var name = ['홍길동', '이영희', '김철수'];
   // var number = ['010-2345-6789', '010-1234-5618', '010-3456-7890'];
 
-
   var nameNumber = [
     {'name': '홍길동', 'number': '010-2345-6789'},
     {'name': '이영희', 'number': '010-1234-5618'},
@@ -46,11 +45,14 @@ class _MyAppState extends State<MyApp> {
   var total = 3;
 
   void naming() {
-    print(nameNumber[0]['name'].toString() + '_' + nameNumber[0]['number'].toString()) ;
+    print(nameNumber[0]['name'].toString() +
+        '_' +
+        nameNumber[0]['number'].toString());
     nameNumber[0]['name'];
     try {
       setState(() {
-          nameNumber.sort((a, b) =>  a['name'].toString().compareTo(b['name'].toString()));
+        nameNumber.sort(
+            (a, b) => a['name'].toString().compareTo(b['name'].toString()));
       });
       print(nameNumber.toString());
     } catch (e) {
@@ -70,10 +72,10 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  addName(a,b) {
-    var temp ;
+  addName(a, b) {
+    var temp;
     setState(() {
-      temp =  {'name':a.toString(),'number':b.toString()};
+      temp = {'name': a.toString(), 'number': b.toString()};
     });
     print(temp.toString());
     setState(() {
@@ -100,7 +102,6 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,12 +127,12 @@ class _MyAppState extends State<MyApp> {
         backgroundColor: Colors.white,
         actions: [
           IconButton(
-            icon: Icon(Icons.contacts),
-            color: Colors.blue,
-            onPressed: () {
-              print('getPermission');
-              getPermission();
-            }),
+              icon: Icon(Icons.contacts),
+              color: Colors.blue,
+              onPressed: () {
+                print('getPermission');
+                getPermission();
+              }),
         ],
       ),
       body: Column(
@@ -149,7 +150,9 @@ class _MyAppState extends State<MyApp> {
                           naming();
                         })),
                 Center(
-                    child: Text('정렬', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800),
+                    child: Text(
+                  '정렬',
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w800),
                 )),
               ],
             ),
@@ -185,22 +188,21 @@ class _MyAppState extends State<MyApp> {
       bottomNavigationBar: BottomAppBar(
         child: SizedBox(
           height: 60,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              IconButton(
-                icon: Icon(Icons.call),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(Icons.message),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(Icons.contact_page),
-                onPressed: () {},
-              ),
-            ]),
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            IconButton(
+              icon: Icon(Icons.call),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: Icon(Icons.message),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: Icon(Icons.contact_page),
+              onPressed: () {},
+            ),
+          ]),
         ),
       ),
     );
@@ -246,14 +248,16 @@ class DialogUI extends StatelessWidget {
                 TextButton(
                   child: Text('OK'),
                   onPressed: () {
-                    if (inputName.text.length == 0 || inputNumber.text.length == 0) {
+                    if (inputName.text.length == 0 ||
+                        inputNumber.text.length == 0) {
                       Navigator.of(context).pop();
                       print('if');
                       return;
                     } else {
                       plusOne();
                       Navigator.of(context).pop();
-                      addName(inputName.text.toString(), inputNumber.text.toString());
+                      addName(inputName.text.toString(),
+                          inputNumber.text.toString());
                       print('else');
                     }
                   },
